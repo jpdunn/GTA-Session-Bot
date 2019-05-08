@@ -159,7 +159,6 @@
     <Compile Include="Modules\HelpModule.cs" />
     <Compile Include="Modules\KeyboardModule.cs" />
     <Compile Include="Modules\ManagementModule.cs" />
-    <Compile Include="Modules\PermissionsModule.cs" />
     <Compile Include="Modules\SystemModule.cs" />
     <Compile Include="Preconditions\IsAdminAttribute.cs" />
     <Compile Include="Program.cs" />
@@ -168,7 +167,6 @@
     <Compile Include="Providers\GpuProvider.cs" />
     <Compile Include="Providers\KeyPressProvider.cs" />
     <Compile Include="Providers\MemoryProvider.cs" />
-    <Compile Include="Providers\PermissionManager.cs" />
     <Compile Include="Providers\ProcessProvider.cs" />
     <Compile Include="Providers\ScreenCaptureProvider.cs" />
     <Compile Include="Providers\ScreenshotManager.cs" />

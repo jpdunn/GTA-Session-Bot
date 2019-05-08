@@ -28,13 +28,13 @@
 
 
         /// <summary>
-        ///     ''' Blocks the current thread until the <see cref="Gate">Gate</see> is opened.
-        ///     ''' </summary>
-        ///     ''' <param name="timeoutPeriod">The number of milliseconds to wait for the gate to open.</param>
-        ///     ''' <returns>
-        ///     ''' True if the gate was opened, or False if the current thread 
-        ///     ''' waited for the specified time and the gate was not opened.
-        ///     ''' </returns>
+        /// Blocks the current thread until the <see cref="Gate">Gate</see> is opened.
+        /// </summary>
+        /// <param name="timeoutPeriod">The number of milliseconds to wait for the gate to open.</param>
+        /// <returns>
+        /// True if the gate was opened, or False if the current thread 
+        /// waited for the specified time and the gate was not opened.
+        /// </returns>
         bool WaitUntilOpen(int timeoutPeriod);
     }
 }

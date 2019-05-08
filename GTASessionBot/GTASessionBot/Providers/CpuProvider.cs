@@ -3,14 +3,10 @@ using OpenHardwareMonitor.Hardware;
 using System;
 using System.Collections.Generic;
 
-namespace GTASessionBot.Providers
-{
-    public class CpuProvider
-    {
+namespace GTASessionBot.Providers {
+    public class CpuProvider {
 
-
-        public static string GetCoreCount()
-        {
+        public static string GetCoreCount() {
             int cores = 0;
             Computer thisComputer;
 
@@ -18,24 +14,20 @@ namespace GTASessionBot.Providers
             thisComputer = new Computer() { CPUEnabled = true };
 
             thisComputer.Open();
-            foreach (var hardwareItem in thisComputer.Hardware)
-            {
-                if (hardwareItem.HardwareType == HardwareType.CPU)
-                {
+
+            foreach (var hardwareItem in thisComputer.Hardware) {
+                if (hardwareItem.HardwareType == HardwareType.CPU) {
                     hardwareItem.Update();
 
-                    foreach (IHardware subHardware in hardwareItem.SubHardware)
-                    {
+                    foreach (IHardware subHardware in hardwareItem.SubHardware) {
                         subHardware.Update();
                     }
 
-                    foreach (var sensor in hardwareItem.Sensors)
-                    {
+                    foreach (var sensor in hardwareItem.Sensors) {
                         // Only look at the load sensors, and ignore the sensor if it has an index
                         // of zero. This allows us to get the number of cores that the CPU has 
                         // and allows us to ignore the 'CPU Total' sensor.
-                        if ((sensor.SensorType == SensorType.Load) && (sensor.Index > 0))
-                        {
+                        if ((sensor.SensorType == SensorType.Load) && (sensor.Index > 0)) {
                             cores += 1;
                         }
                     }
@@ -45,20 +37,15 @@ namespace GTASessionBot.Providers
             thisComputer.Close();
 
             return $"{cores} cores";
-
         }
 
 
-        public static string GetUpTime()
-        {
-
+        public static string GetUpTime() {
             return TimeSpan.FromMilliseconds(Kernel32.GetTickCount64()).ToString("c");
         }
 
 
-        public static string GetProcessorInformation()
-        {
-
+        public static string GetProcessorInformation() {
             Computer thisComputer;
             string rc = "";
 
@@ -66,10 +53,8 @@ namespace GTASessionBot.Providers
             thisComputer = new Computer() { CPUEnabled = true };
 
             thisComputer.Open();
-            foreach (var hardwareItem in thisComputer.Hardware)
-            {
-                if (hardwareItem.HardwareType == HardwareType.CPU)
-                {
+            foreach (var hardwareItem in thisComputer.Hardware) {
+                if (hardwareItem.HardwareType == HardwareType.CPU) {
                     hardwareItem.Update();
 
                     rc = hardwareItem.Name;
@@ -81,9 +66,7 @@ namespace GTASessionBot.Providers
         }
 
 
-        public static Dictionary<string, string> GetCpuTemperatures()
-        {
-
+        public static Dictionary<string, string> GetCpuTemperatures() {
             Computer thisComputer;
             Dictionary<string, string> rc;
 
@@ -92,21 +75,16 @@ namespace GTASessionBot.Providers
             rc = new Dictionary<string, string>();
 
             thisComputer.Open();
-            foreach (var hardwareItem in thisComputer.Hardware)
-            {
-                if (hardwareItem.HardwareType == HardwareType.CPU)
-                {
+            foreach (var hardwareItem in thisComputer.Hardware) {
+                if (hardwareItem.HardwareType == HardwareType.CPU) {
                     hardwareItem.Update();
 
-                    foreach (IHardware subHardware in hardwareItem.SubHardware)
-                    {
+                    foreach (IHardware subHardware in hardwareItem.SubHardware) {
                         subHardware.Update();
                     }
 
-                    foreach (var sensor in hardwareItem.Sensors)
-                    {
-                        if (sensor.SensorType == SensorType.Temperature)
-                        {
+                    foreach (var sensor in hardwareItem.Sensors) {
+                        if (sensor.SensorType == SensorType.Temperature) {
 
                             rc.Add(
                                 $"{sensor.Name} Temp",
@@ -124,8 +102,7 @@ namespace GTASessionBot.Providers
         }
 
 
-        public static Dictionary<string, string> GetCpuLoad()
-        {
+        public static Dictionary<string, string> GetCpuLoad() {
             Computer thisComputer;
             Dictionary<string, string> rc;
 
@@ -134,20 +111,18 @@ namespace GTASessionBot.Providers
             rc = new Dictionary<string, string>();
 
             thisComputer.Open();
-            foreach (var hardwareItem in thisComputer.Hardware)
-            {
-                if (hardwareItem.HardwareType == HardwareType.CPU)
-                {
-                    hardwareItem.Update();
-                    foreach (IHardware subHardware in hardwareItem.SubHardware)
-                        subHardware.Update();
 
-                    foreach (var sensor in hardwareItem.Sensors)
-                    {
-                        if (sensor.SensorType == SensorType.Load)
-                        {
-                            if (sensor.Name.Equals("CPU Total"))
-                            {
+            foreach (var hardwareItem in thisComputer.Hardware) {
+                if (hardwareItem.HardwareType == HardwareType.CPU) {
+                    hardwareItem.Update();
+
+                    foreach (IHardware subHardware in hardwareItem.SubHardware) {
+                        subHardware.Update();
+                    }
+
+                    foreach (var sensor in hardwareItem.Sensors) {
+                        if (sensor.SensorType == SensorType.Load) {
+                            if (sensor.Name.Equals("CPU Total")) {
                                 rc.Add(
                                     $"{sensor.Name} Usage",
                                     sensor.Value.HasValue ? $"{sensor.Value.Value.ToString()}% used" : "no value"
@@ -158,6 +133,7 @@ namespace GTASessionBot.Providers
                     }
                 }
             }
+
             thisComputer.Close();
 
             return rc;

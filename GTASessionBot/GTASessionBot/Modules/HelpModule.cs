@@ -8,39 +8,49 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GTASessionBot.Modules
-{
+namespace GTASessionBot.Modules {
     [Group("help"), Name("Help")]
-    public class HelpModule : ModuleBase<SocketCommandContext>
-    {
+    public class HelpModule : ModuleBase<SocketCommandContext> {
+
         private readonly CommandService _commands;
         private readonly IServiceProvider _provider;
         private readonly Configuration.Configuration _config;
 
 
-        public HelpModule(IServiceProvider provider, Configuration.Configuration config)
-        {
+        public HelpModule(
+            IServiceProvider provider,
+            Configuration.Configuration config
+        ) {
             _commands = provider.GetService<CommandService>();
             _provider = provider;
             _config = config;
         }
 
-        [Command]
-        public async Task HelpAsync()
-        {
-            var modules = _commands.Modules.Where(x => !string.IsNullOrWhiteSpace(x.Summary));
 
-            var embed = new EmbedBuilder()
+        [Command]
+        public async Task HelpAsync() {
+            List<ModuleInfo> modules;
+            EmbedBuilder embed;
+
+
+            modules = _commands.Modules.Where(x => !string.IsNullOrWhiteSpace(x.Summary)).ToList();
+
+            embed = new EmbedBuilder()
                 .WithFooter(x => x.Text = $"Type `{_config.Prefix}help <module>` for more information");
 
-            foreach (var module in modules)
-            {
-                bool success = false;
-                foreach (var command in module.Commands)
-                {
-                    var result = await command.CheckPreconditionsAsync(Context, _provider);
-                    if (result.IsSuccess)
-                    {
+            foreach (var module in modules) {
+                bool success;
+
+
+                success = false;
+
+                foreach (var command in module.Commands) {
+                    PreconditionResult result;
+
+
+                    result = await command.CheckPreconditionsAsync(Context, _provider);
+
+                    if (result.IsSuccess) {
                         success = true;
                         break;
                     }
@@ -57,50 +67,60 @@ namespace GTASessionBot.Modules
             await ReplyAsync("", embed: embed.Build());
         }
 
-        [Command]
-        public async Task HelpAsync(string moduleName)
-        {
-            var module = _commands.Modules.FirstOrDefault(x => x.Name.ToLower() == moduleName.ToLower());
 
-            if (moduleName[0].ToString() == _config.Prefix)
-            {
-                var commandName = moduleName.Substring(1);
-                var command = _commands.Commands.FirstOrDefault(x => x.Aliases.Any(z => z.ToLower() == commandName.ToLower()));
+        [Command]
+        public async Task HelpAsync(string moduleName) {
+            ModuleInfo module;
+            List<CommandInfo> commands;
+            EmbedBuilder builder;
+
+
+            module = _commands.Modules.FirstOrDefault(x => string.Equals(x.Name.ToLower(), moduleName.ToLower()));
+
+            if (string.Equals(moduleName[0].ToString(), _config.Prefix)) {
+                string commandName;
+                CommandInfo command;
+
+
+                commandName = moduleName.Substring(1);
+                command = _commands.Commands.FirstOrDefault(x => x.Aliases.Any(z => string.Equals(z.ToLower(), commandName.ToLower())));
+
                 await HelpAsync(command.Module.Name, moduleName.Substring(1));
                 return;
             }
 
-            if (module == null)
-            {
+            if (module == null) {
                 await ReplyAsync($"The module `{moduleName}` does not exist.");
                 return;
             }
 
-
-            var commands = module.Commands.Where(x => !string.IsNullOrWhiteSpace(x.Summary))
+            commands = module.Commands.Where(x => !string.IsNullOrWhiteSpace(x.Summary))
                                  .GroupBy(x => x.Name)
-                                 .Select(x => x.First());
+                                 .FirstOrDefault()
+                                 .ToList();
 
-            if (!commands.Any())
-            {
+            if (!commands.Any()) {
                 await ReplyAsync($"The module `{module.Name}` has no available commands :(");
                 return;
             }
 
-            var embed = new EmbedBuilder();
 
-            foreach (var command in commands)
-            {
-                var result = await command.CheckPreconditionsAsync(Context, _provider);
-                if (result.IsSuccess)
-                {
+
+            builder = new EmbedBuilder();
+
+            foreach (var command in commands) {
+                PreconditionResult result;
+
+
+                result = await command.CheckPreconditionsAsync(Context, _provider);
+
+                if (result.IsSuccess) {
                     string field;
 
 
                     field = command.Aliases.First();
 
-                    if (command.Aliases.Count > 1)
-                    {
+                    if (command.Aliases.Count > 1) {
                         List<string> skipped;
                         string aliases;
 
@@ -110,91 +130,100 @@ namespace GTASessionBot.Modules
 
                         // Iterate over all the aliases skipping the first one (as that is the main command)
                         // and if we have any then build a string to display them.
-                        for (var i = 0; i < skipped.Count; i++)
-                        {
-                            if (i == skipped.Count - 1)
-                            {
+                        for (var i = 0; i < skipped.Count; i++) {
+                            if (i == skipped.Count - 1) {
                                 aliases += $"{skipped[i]}";
-                            }
-                            else
-                            {
+                            } else {
                                 aliases += $"{skipped[i]}, ";
                             }
                         }
 
                         // If we had any aliases, then surround them with brackets for formatting sake.
-                        if (!string.IsNullOrEmpty(aliases))
-                        {
+                        if (!string.IsNullOrEmpty(aliases)) {
                             field = $"{field} ({aliases})";
                         }
 
                     }
 
-                    embed.AddField($"{_config.Prefix}{field}", command.Summary);
+                    builder.AddField($"{_config.Prefix}{field}", command.Summary);
                 }
             }
 
-            embed.WithColor(EmbedColors.GetSuccessColor());
+            builder.WithColor(EmbedColors.GetSuccessColor());
 
-            await ReplyAsync("", embed: embed.Build());
+            await ReplyAsync("", embed: builder.Build());
         }
 
-        private async Task HelpAsync(string moduleName, string commandName)
-        {
-            string alias = $"{commandName}".ToLower();
-            var module = _commands.Modules.FirstOrDefault(x => x.Name.ToLower() == moduleName.ToLower());
 
-            if (module == null)
-            {
+        private async Task HelpAsync(string moduleName, string commandName) {
+            string alias;
+            ModuleInfo module;
+            List<CommandInfo> commands;
+
+
+            alias = $"{commandName}".ToLower();
+
+            module = _commands.Modules.FirstOrDefault(x => string.Equals(x.Name.ToLower(), moduleName.ToLower()));
+
+            if (module == null) {
                 await ReplyAsync($"The module `{moduleName}` does not exist.");
                 return;
             }
 
-            var commands = module.Commands.Where(x => !string.IsNullOrWhiteSpace(x.Summary));
+            commands = module.Commands.Where(x => !string.IsNullOrWhiteSpace(x.Summary)).ToList();
 
-            if (commands.Count() == 0)
-            {
-                await ReplyAsync($"The module `{module.Name}` has no available commands :(");
+            if (!commands.Any()) {
+                await ReplyAsync($"The module `{module.Name}` has no available commands.");
                 return;
             }
 
-            var command = commands.Where(x => x.Aliases.Contains(alias));
-            var embed = new EmbedBuilder();
+            EmbedBuilder builder;
+            List<string> aliases;
 
-            var aliases = new List<string>();
-            foreach (var overload in command)
-            {
-                var result = await overload.CheckPreconditionsAsync(Context, _provider);
-                if (result.IsSuccess)
-                {
-                    var sbuilder = new StringBuilder()
-                        .Append(_config.Prefix + overload.Aliases.First());
 
-                    foreach (var parameter in overload.Parameters)
-                    {
-                        string p = parameter.Name;
-                        p = StringHelper.FirstCharToUpper(p);
+            builder = new EmbedBuilder();
+            aliases = new List<string>();
+
+            foreach (var overload in commands.Where(x => x.Aliases.Contains(alias))) {
+                PreconditionResult result;
+
+
+                result = await overload.CheckPreconditionsAsync(Context, _provider);
+
+                if (result.IsSuccess) {
+                    StringBuilder stringBuilder;
+
+
+                    stringBuilder = new StringBuilder();
+
+                    stringBuilder.Append(_config.Prefix + overload.Aliases.First());
+
+                    foreach (var parameter in overload.Parameters) {
+                        string name;
+
+
+                        name = StringHelper.FirstCharToUpper(parameter.Name);
 
                         if (parameter.IsRemainder)
-                            p += "...";
+                            name += "...";
                         if (parameter.IsOptional)
-                            p = $"[{p}]";
+                            name = $"[{name}]";
                         else
-                            p = $"<{p}>";
+                            name = $"<{name}>";
 
-                        sbuilder.Append(" " + p);
+                        stringBuilder.Append(" " + name);
                     }
 
-                    embed.AddField(sbuilder.ToString(), overload.Remarks ?? overload.Summary);
+                    builder.AddField(stringBuilder.ToString(), overload.Remarks ?? overload.Summary);
                 }
                 aliases.AddRange(overload.Aliases);
             }
 
-            embed.WithFooter(x => x.Text = $"Aliases: {string.Join(", ", aliases)}");
+            builder.WithFooter(x => x.Text = $"Aliases: {string.Join(", ", aliases)}");
 
-            embed.WithColor(EmbedColors.GetSuccessColor());
+            builder.WithColor(EmbedColors.GetSuccessColor());
 
-            await ReplyAsync("", embed: embed.Build());
+            await ReplyAsync("", embed: builder.Build());
         }
     }
 }

@@ -67,7 +67,6 @@ namespace GTASessionBot {
                  .AddSingleton<StartupService>()
                  .AddSingleton<ScreenshotManager>()
                  .AddSingleton<ScreenshotProvider>()
-                 .AddSingleton<PermissionManager>()
                  .AddSingleton<Random>()
                  .AddSingleton(_config);
 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 
 namespace GTASessionBot.Services {
+
     public class StartupService {
         private readonly DiscordSocketClient _discord;
         private readonly CommandService _commands;

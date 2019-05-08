@@ -6,10 +6,9 @@ using System.IO;
 using System.Threading.Tasks;
 
 
-namespace GTASessionBot.Services
-{
-    public class LoggingService
-    {
+namespace GTASessionBot.Services {
+    public class LoggingService {
+
         private readonly DiscordSocketClient _discord;
         private readonly CommandService _commands;
 
@@ -22,8 +21,7 @@ namespace GTASessionBot.Services
         /// </summary>
         /// <param name="discord">The Discord socket client to use.</param>
         /// <param name="commands">The command service to use.</param>
-        public LoggingService(DiscordSocketClient discord, CommandService commands)
-        {
+        public LoggingService(DiscordSocketClient discord, CommandService commands) {
             _logDirectory = Path.Combine(AppContext.BaseDirectory, "logs");
 
             _discord = discord;
@@ -39,8 +37,7 @@ namespace GTASessionBot.Services
         /// </summary>
         /// <param name="msg">The message to log.</param>
         /// <returns>An awaitable task.</returns>
-        private Task OnLogAsync(LogMessage msg)
-        {
+        private Task OnLogAsync(LogMessage msg) {
             string logText;
 
 
@@ -55,8 +52,7 @@ namespace GTASessionBot.Services
         /// </summary>
         /// <param name="log">The command log message to log.</param>
         /// <returns>An awaitable task.</returns>
-        private Task OnCommandLogAsync(LogMessage log)
-        {
+        private Task OnCommandLogAsync(LogMessage log) {
             return Console.Out.WriteLineAsync(log.Message);
         }
     }

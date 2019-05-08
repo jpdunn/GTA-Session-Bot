@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace GTASessionBot.Windows_Libraries
-{
+namespace GTASessionBot.Windows_Libraries {
+
     [Flags]
-    public enum KeyFlags
-    {
+    public enum KeyFlags {
         KeyDown = 0x0000,
         ExtendedKey = 0x0001,
         KeyUp = 0x0002,

@@ -13,6 +13,7 @@ namespace GTASessionBot.Services {
         private readonly Configuration.Configuration _config;
         private readonly IServiceProvider _provider;
 
+
         public CommandHandler(
             DiscordSocketClient discord,
             CommandService commands,

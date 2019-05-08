@@ -2,19 +2,15 @@
 using Discord.WebSocket;
 using System;
 
-namespace GTASessionBot.Utilities
-{
-    public class ErrorHandler
-    {
+namespace GTASessionBot.Utilities {
+    public class ErrorHandler {
 
         public static MessageProperties GetDefaultErrorMessageEmbed(
             Exception e,
             MessageProperties message,
             SocketUserMessage userMessage
-        )
-        {
+        ) {
             EmbedBuilder embed;
-
 
 
             embed = new EmbedBuilder();

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace GTASessionBot.Windows_Libraries
-{
+namespace GTASessionBot.Windows_Libraries {
+
     /// <summary>
     /// Contains information about a simulated mouse event.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct MouseInput
-    {
+    public struct MouseInput {
         /// <summary>
         /// The absolute position of the mouse, or the amount of motion since the last mouse event was generated, 
         /// depending on the value of the dwFlags member. Absolute data is specified as the x coordinate of the mouse; 

@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 
-namespace GTASessionBot.Configuration
-{
-    public class Configuration
-    {
+namespace GTASessionBot.Configuration {
 
+    public class Configuration {
 
         /// <summary>
         /// The Discord API token.
         /// </summary>
         public string DiscordToken { get; set; }
+
 
         /// <summary>
         /// Returns true if the installed GTA game is a Steam game, 

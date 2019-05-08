@@ -1,10 +1,9 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace GTASessionBot.Windows_Libraries
-{
+namespace GTASessionBot.Windows_Libraries {
+
     [StructLayout(LayoutKind.Sequential)]
-    public struct Rect
-    {
+    public struct Rect {
 
         public int left;
 

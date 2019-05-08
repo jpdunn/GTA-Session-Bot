@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace GTASessionBot.Windows_Libraries
-{
+namespace GTASessionBot.Windows_Libraries {
+
     /// <summary>
     /// Contains information about a simulated keyboard event.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct KeyboardInput
-    {
+    public struct KeyboardInput {
 
         /// <summary>
         /// A virtual-key code. The code must be a value in the range 1 to 254. 

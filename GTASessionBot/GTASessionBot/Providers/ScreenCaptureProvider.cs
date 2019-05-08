@@ -4,10 +4,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace GTASessionBot.Providers
-{
-    public class ScreenCaptureProvider
-    {
+namespace GTASessionBot.Providers {
+    public class ScreenCaptureProvider {
 
         private int PlayerListWidth = 280; // Default 280
         private int PlayerListHeight = 601; // Default 601
@@ -16,8 +14,8 @@ namespace GTASessionBot.Providers
 
         private Configuration.Configuration _config;
 
-        public ScreenCaptureProvider(Configuration.Configuration config)
-        {
+
+        public ScreenCaptureProvider(Configuration.Configuration config) {
             _config = config;
 
             PlayerListHeight = _config.ListHeight;
@@ -27,15 +25,12 @@ namespace GTASessionBot.Providers
         }
 
 
-
         /// <summary>
         /// Captures a screenshot of the given window handle.
         /// </summary>
         /// <param name="windowHandle">The window handle to get the screenshot from.</param>
         /// <returns>The <see cref="MemoryStream"/> of the captured screenshot.</returns>
-        public byte[] CaptureWindow(IntPtr windowHandle)
-        {
-
+        public byte[] CaptureWindow(IntPtr windowHandle) {
             Rect rect;
             int width;
             int height;
@@ -79,8 +74,7 @@ namespace GTASessionBot.Providers
         /// <param name="windowHandle">The window handle to get the screenshot from.</param>
         /// <param name="filePath">The file path to save the image to.</param>
         /// <returns>The <see cref="Bitmap"/> of the captured screenshot.</returns>
-        public void CapturePlayerList(IntPtr windowHandle, string filePath)
-        {
+        public void CapturePlayerList(IntPtr windowHandle, string filePath) {
 
             Rect rect;
             int width;
@@ -119,15 +113,13 @@ namespace GTASessionBot.Providers
         /// Merges the player list screenshots into a single image.
         /// </summary>
         /// <returns>A byte array of the merged image.</returns>
-        public byte[] MergePlayerList()
-        {
+        public byte[] MergePlayerList() {
             MemoryStream rc;
             Image list1;
             Image list2;
 
 
-            if (!File.Exists(Common.PlayerListFirstScreenshotPath) || !File.Exists(Common.PlayerListSecondScreenshotPath))
-            {
+            if (!File.Exists(Common.PlayerListFirstScreenshotPath) || !File.Exists(Common.PlayerListSecondScreenshotPath)) {
                 throw new Exception(
                     "Unable to locate the player list screenshots, please ensure the bot has had adequate time to capture the player list."
                 );
@@ -137,10 +129,8 @@ namespace GTASessionBot.Providers
             list2 = Image.FromFile(Common.PlayerListSecondScreenshotPath);
             rc = new MemoryStream();
 
-            using (Bitmap bmp = new Bitmap(list1.Width + list2.Width, Math.Max(list1.Height, list2.Height)))
-            {
-                using (Graphics g = Graphics.FromImage(bmp))
-                {
+            using (Bitmap bmp = new Bitmap(list1.Width + list2.Width, Math.Max(list1.Height, list2.Height))) {
+                using (Graphics g = Graphics.FromImage(bmp)) {
                     g.DrawImage(list1, new Point(0, 0));
                     g.DrawImage(list2, new Point(list1.Width, 0));
                 }

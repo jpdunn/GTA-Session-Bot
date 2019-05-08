@@ -2,10 +2,8 @@
 using System;
 using System.IO;
 
-namespace GTASessionBot.Configuration
-{
-    public class ConfigurationReader
-    {
+namespace GTASessionBot.Configuration {
+    public class ConfigurationReader {
 
         public static string _filename { get; private set; } = "_configurations.json";
 
@@ -14,8 +12,7 @@ namespace GTASessionBot.Configuration
         /// Creates a new <see cref="ConfigurationReader"/>.
         /// </summary>
         /// <param name="filename">The filename of the configuration file.</param>
-        public ConfigurationReader(string filename)
-        {
+        public ConfigurationReader(string filename) {
             _filename = filename;
         }
 
@@ -23,15 +20,13 @@ namespace GTASessionBot.Configuration
         /// <summary>
         /// Ensures that the bot configuration file exists.
         /// </summary>
-        public static void EnsureExists()
-        {
+        public static void EnsureExists() {
             string file;
 
 
             file = Path.Combine(AppContext.BaseDirectory, _filename);
 
-            if (!File.Exists(file))
-            {
+            if (!File.Exists(file)) {
                 throw new ApplicationException("Unable to locate the _configurations.json file.");
             }
         }
@@ -41,8 +36,7 @@ namespace GTASessionBot.Configuration
         /// Loads the configuration file.
         /// </summary>
         /// <returns>The configuration object.</returns>
-        public static Configuration Load()
-        {
+        public static Configuration Load() {
 
             string file;
 

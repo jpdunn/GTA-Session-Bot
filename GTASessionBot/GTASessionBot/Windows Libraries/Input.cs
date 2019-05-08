@@ -1,10 +1,9 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace GTASessionBot.Windows_Libraries
-{
+namespace GTASessionBot.Windows_Libraries {
+
     [StructLayout(LayoutKind.Explicit)]
-    struct Input
-    {
+    struct Input {
 
         /// <summary>
         /// The type of the input event. This member can be one of the following values.

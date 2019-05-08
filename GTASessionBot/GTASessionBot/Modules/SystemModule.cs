@@ -56,6 +56,7 @@ namespace GTASessionBot.Modules {
                 }
 
                 await response.ModifyAsync(msg => { msg.Embed = embed.Build(); msg.Content = ""; });
+
             } catch (Exception e) {
                 await response.ModifyAsync(msg => msg = ErrorHandler.GetDefaultErrorMessageEmbed(e, msg, Context.Message));
             }
@@ -95,6 +96,7 @@ namespace GTASessionBot.Modules {
                 }
 
                 await response.ModifyAsync(msg => { msg.Embed = embed.Build(); msg.Content = ""; });
+
             } catch (Exception e) {
                 await response.ModifyAsync(msg => msg = ErrorHandler.GetDefaultErrorMessageEmbed(e, msg, Context.Message));
             }

@@ -4,10 +4,8 @@ using System.IO;
 using System.Threading;
 using System.Timers;
 
-namespace GTASessionBot.Providers
-{
-    public class ScreenshotManager
-    {
+namespace GTASessionBot.Providers {
+    public class ScreenshotManager {
 
         private static System.Timers.Timer _screenshotTimer;
         private static int _ScreenshotAge;
@@ -16,8 +14,7 @@ namespace GTASessionBot.Providers
         private Configuration.Configuration _config { get; }
 
 
-        public ScreenshotManager(Configuration.Configuration config)
-        {
+        public ScreenshotManager(Configuration.Configuration config) {
             _ScreenshotAge = 0;
 
             // Set up the timer for automatically capturing screenshots once all our commands are hooked up.
@@ -26,8 +23,7 @@ namespace GTASessionBot.Providers
             _screenshotTimer.Elapsed += new ElapsedEventHandler(TimerTick);
             _tempDirectoryPath = Common.TempDirectoryPath;
 
-            if (!Directory.Exists(_tempDirectoryPath))
-            {
+            if (!Directory.Exists(_tempDirectoryPath)) {
                 Directory.CreateDirectory(_tempDirectoryPath);
             }
 
@@ -38,8 +34,7 @@ namespace GTASessionBot.Providers
         /// <summary>
         /// Stops the timer.
         /// </summary>
-        public void StopTimer()
-        {
+        public void StopTimer() {
             _screenshotTimer.Stop();
         }
 
@@ -47,27 +42,20 @@ namespace GTASessionBot.Providers
         /// <summary>
         /// Starts the timer.
         /// </summary>
-        public void StartTimer()
-        {
+        public void StartTimer() {
             _screenshotTimer.Start();
         }
 
 
-        private void TimerTick(object sender, ElapsedEventArgs e)
-        {
-            lock (syncLock)
-            {
+        private void TimerTick(object sender, ElapsedEventArgs e) {
+            lock (syncLock) {
                 _ScreenshotAge += 1;
 
-                if (_ScreenshotAge > 20)
-                {
+                if (_ScreenshotAge > 20) {
                     FetchPlayerList();
                     _ScreenshotAge = 0;
-                }
-                else
-                {
-                    if (_config.DebugLogging)
-                    {
+                } else {
+                    if (_config.DebugLogging) {
                         Console.WriteLine($"---------------Sleeping for { 20 - _ScreenshotAge} seconds...--------------");
                     }
                 }
@@ -78,8 +66,7 @@ namespace GTASessionBot.Providers
         /// <summary>
         /// Fetches both pages of the player list and saves the images to disk.
         /// </summary>
-        private void FetchPlayerList()
-        {
+        private void FetchPlayerList() {
             ProcessProvider provider;
             IntPtr windowHandle;
             ScreenCaptureProvider captureProvider;

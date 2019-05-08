@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 
 
-namespace GTASessionBot.Providers
-{
-    public class MemoryProvider
-    {
+namespace GTASessionBot.Providers {
+    public class MemoryProvider {
 
-        public static Dictionary<string, string> GetRamUsage()
-        {
-
+        public static Dictionary<string, string> GetRamUsage() {
             Computer thisComputer;
             Dictionary<string, string> rc;
 
@@ -19,21 +15,16 @@ namespace GTASessionBot.Providers
 
             thisComputer.Open();
 
-            foreach (var hardwareItem in thisComputer.Hardware)
-            {
-                if (hardwareItem.HardwareType == HardwareType.RAM)
-                {
+            foreach (var hardwareItem in thisComputer.Hardware) {
+                if (hardwareItem.HardwareType == HardwareType.RAM) {
                     hardwareItem.Update();
 
-                    foreach (IHardware subHardware in hardwareItem.SubHardware)
-                    {
+                    foreach (IHardware subHardware in hardwareItem.SubHardware) {
                         subHardware.Update();
                     }
 
-                    foreach (var sensor in hardwareItem.Sensors)
-                    {
-                        if (sensor.SensorType == SensorType.Data)
-                        {
+                    foreach (var sensor in hardwareItem.Sensors) {
+                        if (sensor.SensorType == SensorType.Data) {
 
                             rc.Add(
                                 sensor.Name,

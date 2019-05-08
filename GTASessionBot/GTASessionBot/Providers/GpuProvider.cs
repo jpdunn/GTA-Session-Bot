@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 
 
-namespace GTASessionBot.Providers
-{
-    public class GpuProvider
-    {
+namespace GTASessionBot.Providers {
+    public class GpuProvider {
 
-        public static Dictionary<string, string> GetGpuTemperatures()
-        {
+        public static Dictionary<string, string> GetGpuTemperatures() {
             Computer thisComputer;
             Dictionary<string, string> rc;
 
@@ -18,21 +15,17 @@ namespace GTASessionBot.Providers
 
             thisComputer.Open();
 
-            foreach (var hardwareItem in thisComputer.Hardware)
-            {
-                if (hardwareItem.HardwareType == HardwareType.GpuNvidia)
-                {
+            foreach (var hardwareItem in thisComputer.Hardware) {
+
+                if (hardwareItem.HardwareType == HardwareType.GpuNvidia) {
                     hardwareItem.Update();
 
-                    foreach (IHardware subHardware in hardwareItem.SubHardware)
-                    {
+                    foreach (IHardware subHardware in hardwareItem.SubHardware) {
                         subHardware.Update();
                     }
 
-                    foreach (var sensor in hardwareItem.Sensors)
-                    {
-                        if (sensor.SensorType == SensorType.Temperature)
-                        {
+                    foreach (var sensor in hardwareItem.Sensors) {
+                        if (sensor.SensorType == SensorType.Temperature) {
 
                             rc.Add(
                                 $"{sensor.Name} Temp",
@@ -50,8 +43,7 @@ namespace GTASessionBot.Providers
         }
 
 
-        public static Dictionary<string, string> GetGpuUsage()
-        {
+        public static Dictionary<string, string> GetGpuUsage() {
             Computer thisComputer;
             Dictionary<string, string> rc;
 
@@ -61,21 +53,16 @@ namespace GTASessionBot.Providers
 
             thisComputer.Open();
 
-            foreach (var hardwareItem in thisComputer.Hardware)
-            {
-                if (hardwareItem.HardwareType == HardwareType.GpuNvidia)
-                {
+            foreach (var hardwareItem in thisComputer.Hardware) {
+                if (hardwareItem.HardwareType == HardwareType.GpuNvidia) {
                     hardwareItem.Update();
 
-                    foreach (IHardware subHardware in hardwareItem.SubHardware)
-                    {
+                    foreach (IHardware subHardware in hardwareItem.SubHardware) {
                         subHardware.Update();
                     }
 
-                    foreach (var sensor in hardwareItem.Sensors)
-                    {
-                        if (sensor.SensorType == SensorType.Load)
-                        {
+                    foreach (var sensor in hardwareItem.Sensors) {
+                        if (sensor.SensorType == SensorType.Load) {
 
                             rc.Add(
                                 $"{sensor.Name} Usage",

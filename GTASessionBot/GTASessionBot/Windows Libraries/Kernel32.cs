@@ -2,11 +2,10 @@
 using System.Runtime.InteropServices;
 
 
-namespace GTASessionBot.Windows_Libraries
-{
+namespace GTASessionBot.Windows_Libraries {
+
     [Flags]
-    public enum ThreadAccess : int
-    {
+    public enum ThreadAccess : int {
         TERMINATE = (0x0001),
         SUSPEND_RESUME = (0x0002),
         GET_CONTEXT = (0x0008),
@@ -18,8 +17,8 @@ namespace GTASessionBot.Windows_Libraries
         DIRECT_IMPERSONATION = (0x0200)
     }
 
-    public class Kernel32
-    {
+
+    public class Kernel32 {
 
         /// <summary>
         /// Opens an existing thread object.

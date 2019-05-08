@@ -29,7 +29,7 @@ namespace GTASessionBot.Modules {
             Configuration.Configuration config,
             ScreenshotManager screenshotManager,
             ScreenshotProvider screenshotProvider
-            ) {
+        ) {
             _config = config;
             _screenshotManager = screenshotManager;
             _screenshotProvider = screenshotProvider;
