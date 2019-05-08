@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <?include Variables.wxi ?>
+
+    <Product
+        Id="*"
+        Name="$(var.Name)"
+        Language="1033"
+        Version="$(var.Version)"
+        Manufacturer="$(var.Manufacturer)"
+        UpgradeCode="$(var.UpgradeCode)">
+        
+        <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+        <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+        <MediaTemplate EmbedCab="yes" />
+
+        <!-- Check that .NET 4.6 is installed. -->
+        <PropertyRef Id="WIX_IS_NETFRAMEWORK_46_OR_LATER_INSTALLED"/>
+        <Condition Message="This setup requires the .NET Framework 4.6 or later installed.">
+            <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_46_OR_LATER_INSTALLED]]>
+        </Condition>
+
+        <!--
+            Set a title prefix property for the main dialog to
+            help tell whether the user is installing or upgrading.
+            -->
+        <SetProperty Id="TITLE_PREFIX" Action="SetTitlePrefix0" After="CostFinalize" Value="Install ">
+            <![CDATA[Not Installed]]>
+        </SetProperty>
+
+        <SetProperty Id="TITLE_PREFIX" Action="SetTitlePrefix1" After="CostFinalize" Value="Upgrade ">
+            <![CDATA[PREVIOUS_VERSION_INSTALLED]]>
+        </SetProperty>
+
+        <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+
+        <Feature Id="ProductFeature" Title="GTA Session Bot" Level="1">
+            <ComponentGroupRef Id="ProductComponents" />
+            <ComponentGroupRef Id="EmbeddedResources" />
+        </Feature>
+
+        <UI>
+            <UIRef Id="WixUI_InstallDir" />
+            <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg" Order="2">1</Publish>
+            <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">1</Publish>
+        </UI>
+        
+    </Product>
+
+    <Fragment>
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFilesFolder">
+                <Directory Id="INSTALLFOLDER" Name="GTA Session Bot">
+                    <Directory Id="ResourcesDir" Name="Resources">
+                        
+                    </Directory>
+                </Directory>
+            </Directory>
+        </Directory>
+    </Fragment>
+
+    <Fragment>
+        <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+             <Component Id="BotExecutable">
+                 <File Source="$(var.GTASessionBot.TargetPath)" Id="GTASessionBot.exe"/>
+             </Component>
+        </ComponentGroup>
+
+        
+        <ComponentGroup Id="EmbeddedResources" Directory="ResourcesDir">
+            <Component Id="EnterResource">
+                <File Source="$(var.GTASessionBot.TargetDir)Resources\enter.exe" Id="enter.exe"/>
+            </Component>
+            <Component Id="OnlineResource">
+                <File Source="$(var.GTASessionBot.TargetDir)Resources\enterOnline.exe" Id="enterOnline.exe"/>
+            </Component>
+        </ComponentGroup>
+    </Fragment>
+</Wix>

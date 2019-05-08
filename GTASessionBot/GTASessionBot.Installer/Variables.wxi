@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+    <?define Name = "GTA Session Bot" ?>
+    <?define BaseProductName = "GTASessionBot" ?>
+    <?define Manufacturer = "Josh Dunn" ?>
+    <?define Version = "1.0.0.0" ?>
+    <?define UpgradeCode = "{df2d1060-c711-4cb1-a220-72a0b792e686}"?>
+</Include>
