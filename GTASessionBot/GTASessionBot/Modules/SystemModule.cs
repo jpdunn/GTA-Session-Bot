@@ -10,10 +10,19 @@ using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 
 namespace GTASessionBot.Modules {
+
+    /// <summary>
+    /// Defines a module for providing information about the system the bot is running on.
+    /// </summary>
     [Group("System"), Name("System")]
     [Summary("Get system information about the machine that is running the session host.")]
     public class SystemModule : ModuleBase<SocketCommandContext> {
 
+
+        /// <summary>
+        /// Gets the CPU information.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("cpu")]
         [Summary("Gets information about the CPU of the system.")]
@@ -64,6 +73,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Gets the GPU information for supported GPU's.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("gpu")]
         [Summary("Gets information about the GPU of the system.")]
@@ -104,6 +117,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Gets the RAM information.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("ram")]
         [Summary("Gets information about the system RAM.")]
@@ -138,6 +155,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Shuts down the machine.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("shutdown")]
         [Summary("Shuts down the host machine.")]
@@ -157,6 +178,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Restarts the machine.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("restart")]
         [Summary("Restarts the host machine.")]
@@ -177,6 +202,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Gets the latency from the machine to the gateway server.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [Command("latency")]
         [Alias("ping")]
         [Summary("Gets the estimated round-trip latency, in milliseconds, to the gateway server.")]
@@ -205,6 +234,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Displays UDP network information for the machine.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("network")]
         [Alias("net")]

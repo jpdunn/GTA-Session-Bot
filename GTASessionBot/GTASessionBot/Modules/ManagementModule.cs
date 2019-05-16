@@ -16,6 +16,9 @@ using System.Threading.Tasks;
 
 namespace GTASessionBot.Modules {
 
+    /// <summary>
+    /// Defines a module for managing the state of the machine that the bot is running on.
+    /// </summary>
     [Name("Management")]
     [Summary("Manage a session host.")]
     public class ManagementModule : ModuleBase<SocketCommandContext> {
@@ -24,7 +27,12 @@ namespace GTASessionBot.Modules {
         private readonly ScreenshotManager _screenshotManager;
         private readonly ScreenshotProvider _screenshotProvider;
 
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ManagementModule"/>.
+        /// </summary>
+        /// <param name="config">The config to use.</param>
+        /// <param name="screenshotManager">The screenshot manager to use.</param>
+        /// <param name="screenshotProvider">The screenshot provider to use.</param>
         public ManagementModule(
             Configuration.Configuration config,
             ScreenshotManager screenshotManager,
@@ -36,6 +44,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Forces the game to find a new GTA Online session.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("newsession")]
         [Alias("split", "solo")]
@@ -101,6 +113,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Brings the GTA process to the foreground.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("foreground")]
         [Alias("front")]
@@ -144,6 +160,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Kills the AutoHotKey process which allows the machine to idle in game.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("stop idle")]
         [Summary("Stops the idle script.")]
@@ -181,6 +201,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Starts the AutoHotKey process which allows the machine to idle in game.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("start idle")]
         [Summary("Starts the idle script.")]
@@ -220,6 +244,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Takes and uploads a screenshot of the current state of the machine.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("status")]
         [Summary("Uploads a screenshot of the host machine. Useful for determining if the GTA process is not in the foreground, or has an error.")]
@@ -294,6 +322,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Gets the version number of the bot.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [Command("version")]
         [Summary("Gets the version number of the bot.")]
         public async Task GetVersionAsync() {
@@ -329,6 +361,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Sets the desktop to be the active window.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("desktop")]
         [Summary("Sets the desktop to be the active window.")]
@@ -369,6 +405,11 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Builds the watermark for the uploaded image of the machine state.
+        /// </summary>
+        /// <param name="windowHandle">The window handle to use.</param>
+        /// <returns>The <see cref="TextLayer"/> to use.</returns>
         private TextLayer BuildWatermark(IntPtr windowHandle) {
             TextLayer watermark;
             Rect rect;
@@ -403,12 +444,6 @@ namespace GTASessionBot.Modules {
         [Command("cookie")]
         public async Task GiveCookie() {
             await ReplyAsync($"Here {Context.User.Mention}, have a cookie :cookie:");
-        }
-
-
-        [Command("sleezy")]
-        public async Task MentionSleezy() {
-            await ReplyAsync($"What the fuck do you want from me? {Context.User.Mention}");
         }
 
 

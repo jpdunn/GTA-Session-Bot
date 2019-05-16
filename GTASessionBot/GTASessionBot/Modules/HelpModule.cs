@@ -9,6 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GTASessionBot.Modules {
+
+    /// <summary>
+    /// Defines a module for help related commands.
+    /// </summary>
     [Group("help"), Name("Help")]
     public class HelpModule : ModuleBase<SocketCommandContext> {
 
@@ -17,6 +21,11 @@ namespace GTASessionBot.Modules {
         private readonly Configuration.Configuration _config;
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HelpModule"/>.
+        /// </summary>
+        /// <param name="provider">The service provider to use.</param>
+        /// <param name="config">The configuration to use.</param>
         public HelpModule(
             IServiceProvider provider,
             Configuration.Configuration config
@@ -27,6 +36,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Handles a basic help command.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [Command]
         public async Task HelpAsync() {
             List<ModuleInfo> modules;
@@ -68,6 +81,11 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Handles help commands for a specific module.
+        /// </summary>
+        /// <param name="moduleName">The name of the module.</param>
+        /// <returns>An awaitable task.</returns>
         [Command]
         public async Task HelpAsync(string moduleName) {
             ModuleInfo module;
@@ -155,6 +173,12 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Handles help commands for a specific command in a module.
+        /// </summary>
+        /// <param name="moduleName">The name of the module.</param>
+        /// <param name="commandName">The name of the command.</param>
+        /// <returns>An awaitable task.</returns>
         private async Task HelpAsync(string moduleName, string commandName) {
             string alias;
             ModuleInfo module;

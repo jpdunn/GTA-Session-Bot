@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace GTASessionBot.Preconditions {
 
+    /// <summary>
+    /// Defines a precondition attribute to check if the user is classed as an administrator.
+    /// </summary>
     public class IsAdmin : PreconditionAttribute {
+
 
         public async override Task<PreconditionResult> CheckPermissionsAsync(
             ICommandContext context,
@@ -38,6 +42,10 @@ namespace GTASessionBot.Preconditions {
         }
 
 
+        /// <summary>
+        /// Gets a random gif to use for the denied message.
+        /// </summary>
+        /// <returns>A gif URL.</returns>
         private string GetDeniedGif() {
             Random r = new Random();
             int rInt = r.Next(0, Common.DeniedGifs.Count);

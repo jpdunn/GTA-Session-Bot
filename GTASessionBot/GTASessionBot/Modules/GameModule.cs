@@ -12,6 +12,10 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace GTASessionBot.Modules {
+
+    /// <summary>
+    /// Defines the module for controlling the game process.
+    /// </summary>
     [Group("game"), Name("Game")]
     [Summary("Controls for the GTA game itself.")]
     public class GameModule : ModuleBase<SocketCommandContext> {
@@ -21,6 +25,12 @@ namespace GTASessionBot.Modules {
         private readonly ScreenshotProvider _screenshotProvider;
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GameModule"/>.
+        /// </summary>
+        /// <param name="config">The configuration to use.</param>
+        /// <param name="screenshotManager">The screenshot manager to use.</param>
+        /// <param name="screenshotProvider">The screenshot provider to use.</param>
         public GameModule(
             Configuration.Configuration config,
             ScreenshotManager screenshotManager,
@@ -31,6 +41,11 @@ namespace GTASessionBot.Modules {
             _screenshotProvider = screenshotProvider;
         }
 
+
+        /// <summary>
+        /// Shuts down the game by forcibly exiting the process.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("exit")]
         [Summary("Exits GTA via brute force.")]
@@ -53,7 +68,6 @@ namespace GTASessionBot.Modules {
                 embed = EmbedHelper.GetDefaultEmbed(Context);
                 embed.AddField(":robot: Stopping bot process", "Please wait...");
 
-                //_screenshotManager.StopTimer();
                 _screenshotProvider.Stop();
 
                 embed.AddField(":white_check_mark: Success", "The bot process has been stopped.");
@@ -70,6 +84,11 @@ namespace GTASessionBot.Modules {
             }
         }
 
+
+        /// <summary>
+        /// Starts the game by launching the process.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("start")]
         [Summary("Starts GTA via Steam or Social Club depending on what is installed.")]
@@ -103,6 +122,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Restarts the game by killing the process and spawning a new one.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("restart")]
         [Summary("Restarts GTA in a very ungraceful way.")]
@@ -136,9 +159,9 @@ namespace GTASessionBot.Modules {
                 embed.AddField("Starting GTA", "Please wait...");
 
                 if (_config.IsSteamGame) {
-                    // TODO: This feels nasty, and really is nasty. Wait for 20 seconds until Steam is able to sync
-                    // the game data. Eventually this should be done by hooking into Steam so that we can know for sure
-                    // when the game sync has been completed.
+                    // This is really nasty but is the best we can do without any information as to whether the game 
+                    // synchronization in Steam has been completed. Wait for 20 seconds until Steam is able to sync
+                    // the game data and hope that the task has completed in time.
                     Thread.Sleep(20000);
                 }
 
@@ -157,6 +180,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Kills the Social Club launcher process that appears after the game is forcibly exited.
+        /// </summary>
+        /// <returns>An awitable task.</returns>
         [IsAdmin]
         [Command("kill launcher")]
         [Summary("Kills the GTA Launcher forcefully.")]
@@ -196,6 +223,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Kills the windows error reporter dialog process.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("kill error")]
         [Summary("Kills the Windows error dialog forcefully.")]
@@ -235,6 +266,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Captures the player list from GTA.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [Command("list")]
         [Summary("Grabs the player list.")]
         public async Task GrabPlayerList() {
@@ -329,6 +364,7 @@ namespace GTASessionBot.Modules {
                 // throw an exception because we do not want to end up in an infinite loop.
                 Thread.Sleep(1000);
                 timeout++;
+
             } while (!process.HasExited && (timeout < 30));
 
             if (timeout >= 30) {
@@ -393,6 +429,7 @@ namespace GTASessionBot.Modules {
                 } else {
                     throw new ArgumentException("Unable to find the Steam installation path in the registry.");
                 }
+
             } else {
                 string installPath;
 

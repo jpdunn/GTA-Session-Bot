@@ -10,10 +10,19 @@ using System.IO;
 using System.Threading.Tasks;
 
 namespace GTASessionBot.Modules {
+
+    /// <summary>
+    /// Defines a module for keyboard related actions.
+    /// </summary>
     [Group("keyboard"), Name("Keyboard"), Alias("kb")]
     [Summary("Everything keyboard related.")]
     public class KeyboardModule : ModuleBase<SocketCommandContext> {
 
+
+        /// <summary>
+        /// Uses an AutoHotKey script to press the `Enter` key.
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("enter")]
         [Summary("Simulates a press of the 'enter' key on the keyboard.")]
@@ -56,6 +65,10 @@ namespace GTASessionBot.Modules {
         }
 
 
+        /// <summary>
+        /// Simulates the key presses needed to enter GTA Online via the in game menu,
+        /// </summary>
+        /// <returns>An awaitable task.</returns>
         [IsAdmin]
         [Command("online")]
         [Summary("Simulates the key presses needed to enter GTA Online via the game menu.")]

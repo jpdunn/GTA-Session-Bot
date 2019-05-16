@@ -3,8 +3,16 @@ using System.Collections.Generic;
 
 
 namespace GTASessionBot.Providers {
+
+    /// <summary>
+    /// Defines the provider for GPU related information.
+    /// </summary>
     public class GpuProvider {
 
+        /// <summary>
+        /// Gets the temperature of the GPU cores.
+        /// </summary>
+        /// <returns>The temperature of the GPU cores.</returns>
         public static Dictionary<string, string> GetGpuTemperatures() {
             Computer thisComputer;
             Dictionary<string, string> rc;
@@ -43,6 +51,10 @@ namespace GTASessionBot.Providers {
         }
 
 
+        /// <summary>
+        /// Gets the usage of the GPU cores.
+        /// </summary>
+        /// <returns>The usage of the GPU cores.</returns>
         public static Dictionary<string, string> GetGpuUsage() {
             Computer thisComputer;
             Dictionary<string, string> rc;

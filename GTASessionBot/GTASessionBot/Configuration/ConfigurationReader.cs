@@ -3,6 +3,10 @@ using System;
 using System.IO;
 
 namespace GTASessionBot.Configuration {
+
+    /// <summary>
+    /// Defines a class used for reading configuration data from the JSON file.
+    /// </summary>
     public class ConfigurationReader {
 
         public static string _filename { get; private set; } = "_configurations.json";
@@ -37,7 +41,6 @@ namespace GTASessionBot.Configuration {
         /// </summary>
         /// <returns>The configuration object.</returns>
         public static Configuration Load() {
-
             string file;
 
 

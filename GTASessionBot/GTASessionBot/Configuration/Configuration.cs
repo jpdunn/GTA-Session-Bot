@@ -2,6 +2,9 @@
 
 namespace GTASessionBot.Configuration {
 
+    /// <summary>
+    /// Defines an object used to hold configuration data for the bot.
+    /// </summary>
     public class Configuration {
 
         /// <summary>

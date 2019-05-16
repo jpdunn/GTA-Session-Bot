@@ -4,8 +4,16 @@ using System;
 using System.Collections.Generic;
 
 namespace GTASessionBot.Providers {
+
+    /// <summary>
+    /// Defines the provider for CPU related information.
+    /// </summary>
     public class CpuProvider {
 
+        /// <summary>
+        /// Gets the number of cores the CPU has.
+        /// </summary>
+        /// <returns>A formatted string containing the number of cores the CPU has.</returns>
         public static string GetCoreCount() {
             int cores = 0;
             Computer thisComputer;
@@ -40,11 +48,20 @@ namespace GTASessionBot.Providers {
         }
 
 
+        /// <summary>
+        /// Gets the uptime of the CPU.
+        /// </summary>
+        /// <returns>The uptime of the CPU.</returns>
         public static string GetUpTime() {
             return TimeSpan.FromMilliseconds(Kernel32.GetTickCount64()).ToString("c");
         }
 
 
+
+        /// <summary>
+        /// Gets basic information about the CPU.
+        /// </summary>
+        /// <returns>Basic information about the CPU.</returns>
         public static string GetProcessorInformation() {
             Computer thisComputer;
             string rc = "";
@@ -66,6 +83,10 @@ namespace GTASessionBot.Providers {
         }
 
 
+        /// <summary>
+        /// Gets the temperatures for each CPU core.
+        /// </summary>
+        /// <returns>The temperatures for each CPU core.</returns>
         public static Dictionary<string, string> GetCpuTemperatures() {
             Computer thisComputer;
             Dictionary<string, string> rc;
@@ -102,6 +123,10 @@ namespace GTASessionBot.Providers {
         }
 
 
+        /// <summary>
+        /// Gets the current load that the CPU is under.
+        /// </summary>
+        /// <returns>The current load that the CPU is under.</returns>
         public static Dictionary<string, string> GetCpuLoad() {
             Computer thisComputer;
             Dictionary<string, string> rc;
