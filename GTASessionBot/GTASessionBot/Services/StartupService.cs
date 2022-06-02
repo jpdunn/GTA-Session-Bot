@@ -98,7 +98,7 @@ namespace GTASessionBot.Services {
             await _discord.StartAsync();
 
             // Load commands and modules into the command service.
-            await _commands.AddModulesAsync(Assembly.GetEntryAssembly());
+            await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), null);
         }
 
 
